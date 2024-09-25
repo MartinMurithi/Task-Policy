@@ -4,7 +4,7 @@ enum statusEnum {
     Submitted = "SUBMITTED",
     Approved = "APPROVED",
     Rejected = "REJECTED",
-    Paid = "Paid"
+    Paid = "PAID"
 }
 
 export interface IClaim extends Document { 
