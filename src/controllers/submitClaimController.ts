@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
 
 import policyModel from "../models/policyModel";
 import { submitClaimSchemaValidator } from "../utils/validator";
@@ -9,6 +8,7 @@ import submitClaimModel from "../models/submitClaimModel";
 const submitClaim = async (req: Request, res: Response): Promise<Response> => {
     const { policyNumber, claimAmount, description } = req.body;
     
+    // will get the policy number from req.params
     try {
         
         // validate the submit claim data
@@ -30,7 +30,7 @@ const submitClaim = async (req: Request, res: Response): Promise<Response> => {
 
         // create new claim
         const newClaim = new submitClaimModel({
-            claimId: new mongoose.Types.ObjectId(),
+            // claimId: new mongoose.Types.ObjectId(),
             policyId : existingPolicy.policyId,
             clientId : existingPolicy.clientId,
             policyNumber : existingPolicy.policyNumber,

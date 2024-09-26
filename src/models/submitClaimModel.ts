@@ -1,22 +1,22 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-import { statusEnum } from "../data/data";
+import { claimStatusEnum } from "../data/data";
 
 export interface ISubmitClaim extends Document {
-    claimId: mongoose.Types.ObjectId,
+    // claimId: mongoose.Types.ObjectId,
     policyId: mongoose.Types.ObjectId,
     clientId: mongoose.Types.ObjectId,
     policyNumber : string,
     claimAmount: number,
-    status: statusEnum,
+    status: claimStatusEnum,
     description: string
 };
 
 const submitClaimSchema: Schema = new Schema({
-    claimId: {
-        type : mongoose.Schema.Types.ObjectId,
-        required: true,
-    },
+    // claimId: {
+    //     type : mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    // },
     policyId: {
         type: mongoose.Types.ObjectId,
         required: true,
@@ -38,8 +38,8 @@ const submitClaimSchema: Schema = new Schema({
     status: {
         type: String,
         required: true,
-        enum: Object.values(statusEnum),
-        default : statusEnum.submitted
+        enum: Object.values(claimStatusEnum),
+        default : claimStatusEnum.submitted
     },
     description: {
         type: String,

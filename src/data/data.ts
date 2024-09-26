@@ -6,13 +6,13 @@ export enum policyTypeEnum {
     home = "home"
 };
 
-export enum policyStatus {
+export enum policyStatusEnum {
     active = "active",
     expired = "expired",
     cancelled = "cancelled"
 }
 
-export enum statusEnum { 
+export enum claimStatusEnum { 
     submitted = "submmited",
     approved = "approved",
     rejected = "rejected",

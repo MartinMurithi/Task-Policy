@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-import { policyTypeEnum, policyStatus } from "../data/data";
+import { policyTypeEnum, policyStatusEnum } from "../data/data";
 
 export interface IPolicy extends Document {
     policyId: mongoose.Types.ObjectId,
@@ -11,10 +11,8 @@ export interface IPolicy extends Document {
     endDate: Date,
     premiumAmount: number,
     coverageAmount: number,
-    status : policyStatus
+    status : policyStatusEnum
 };
-
-// Policy schema
 
 const policySchema: Schema = new Schema({
     policyId: {
@@ -56,8 +54,8 @@ const policySchema: Schema = new Schema({
     status: {
         type: String,
         required: true,
-        enum: Object.values(policyStatus),
-        default : policyStatus.active
+        enum: Object.values(policyStatusEnum),
+        default : policyStatusEnum.active
     }
 }, { timestamps: true });
 

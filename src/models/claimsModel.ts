@@ -1,11 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-enum statusEnum {
-    Submitted = "SUBMITTED",
-    Approved = "APPROVED",
-    Rejected = "REJECTED",
-    Paid = "PAID"
-}
+import { claimStatusEnum } from "../data/data";
 
 export interface IClaim extends Document { 
     claimId: mongoose.Types.ObjectId,
@@ -13,7 +8,7 @@ export interface IClaim extends Document {
     clientId: mongoose.Types.ObjectId,
     claimDate: Date,
     claimAmount: number,
-    status: statusEnum,
+    status: claimStatusEnum,
     description : string
 };
 
@@ -44,7 +39,7 @@ const claimSchema: Schema = new Schema({
     status: {
         type: String,
         required: true,
-        enum : Object.values(statusEnum)
+        enum : Object.values(claimStatusEnum)
     },
     description: {
         type: String,
