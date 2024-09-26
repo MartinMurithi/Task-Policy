@@ -6,9 +6,9 @@ const getTotalClaimsByPolicyType = async (req: Request, res: Response): Promise<
         const totalClaimsByPolicyType = await submitClaimModel.aggregate([
             {
                 $group: {
-                    _id: "$policyType", // Assuming you have a policyType field in your model
-                    totalClaims: { $sum: 1 }, // Count the number of claims
-                    totalClaimAmount: { $sum: "$claimAmount" } // Sum the claim amounts
+                    _id: "$policyType", 
+                    totalClaims: { $sum: 1 }, 
+                    totalClaimAmount: { $sum: "$claimAmount" } 
                 }
             },
             {
