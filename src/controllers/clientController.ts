@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from 'uuid';
 
-import clientSchemaValidator from "../utilities/validator";
+import { clientSchemaValidator } from "../utilities/validator";
 import clientModel from "../models/clientModel";
 
 const createClient = async (req: Request, res: Response) : Promise<Response> => {
     const { name, email, dateOfBirth, address } = req.body;
+
+    // convert dob to an actual date
+    const parsedDOB = new Date(dateOfBirth);
     
     try {
 
@@ -17,20 +19,25 @@ const createClient = async (req: Request, res: Response) : Promise<Response> => 
             return res.status(400).json({ Message: "A user with that email already exists" });
         };
 
-        // check if client schema if valid
-        await clientSchemaValidator.validateAsync(req.body);
+        // validate client data
+        await clientSchemaValidator.validateAsync({
+            name,
+            email,
+            dateOfBirth: parsedDOB, // Use the parsed date
+            address
+        });
         
         // if validation passes, create a new client
         const newClient = new clientModel({
             clientId: new mongoose.Types.ObjectId(),
             name,
             email,
-            dateOfBirth,
+            dateOfBirth : parsedDOB,
             address
         });
-
+        
         const savedClient = await newClient.save();
-        console.log(savedClient);
+        
 
         return res.status(201).json({
             status: 201,
@@ -51,24 +58,24 @@ const createClient = async (req: Request, res: Response) : Promise<Response> => 
     }
 };
 
-const getClientByEmail = async (req: Request, res: Response): Promise<Response> => {
-    try {
-        const { id: _id } = req.params;
-        console.log(_id);
+// const getClientByEmail = async (req: Request, res: Response): Promise<Response> => {
+//     try {
+//         const { id: _id } = req.params;
+//         console.log(_id);
 
-        if (!mongoose.Types.ObjectId.isValid(_id)) {
-            return res.status(500).json({Error : `${_id} is not a valid id.`})
-        }
+//         if (!mongoose.Types.ObjectId.isValid(_id)) {
+//             return res.status(500).json({Error : `${_id} is not a valid id.`})
+//         }
 
-        const client = await clientModel.findById(_id);
-        console.log(client);
+//         const client = await clientModel.findById(_id);
+//         console.log(client);
         
-        return res.status(200).json({ client: client });
+//         return res.status(200).json({ client: client });
         
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ Error: "Internal server error." });
-    }
-};
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ Error: "Internal server error." });
+//     }
+// };
 
 export default createClient;

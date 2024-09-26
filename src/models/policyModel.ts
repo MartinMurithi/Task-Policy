@@ -1,20 +1,20 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-enum policyTypeEnum {
-    Life = 'LIFE',
-    Health = 'HEALTH',
-    Auto = 'AUTO',
-    Home = "HOME"
+export enum policyTypeEnum {
+    Life = 'life',
+    Health = 'health',
+    Auto = 'auto',
+    Home = "home"
 };
 
-enum statusEnum { 
-    Active = "ACTIVE",
-    Expired = "EXPIRED",
-    Cancelled = "CANCELLED"
+export enum statusEnum { 
+    Active = "active",
+    Expired = "expired",
+    Cancelled = "cancelled"
 }
 
 export interface IPolicy extends Document {
-    policyId: string,
+    policyId: mongoose.Types.ObjectId,
     clientId: mongoose.Types.ObjectId,
     policyNumber: string,
     policyType: policyTypeEnum,

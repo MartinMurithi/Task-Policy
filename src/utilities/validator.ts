@@ -1,12 +1,17 @@
 import Joi from "joi";
+import { isValid, differenceInYears } from "date-fns";
+
+import { policyTypeEnum, statusEnum } from "../models/policyModel";
 
 // helper func to check if client is  >= 18
 const isOlderThan18 = (value: Date) : boolean => {
-    const today = new Date();
-    const age = today.getFullYear() - value.getFullYear();
-    console.log(`The client is ${age} years old.`);
-    
-    // Check if age is 18 or older
+    // check if DOB is a valid date
+    if (!isValid(value)) {
+        return false;
+    }
+
+    // calculate age
+    const age = differenceInYears(new Date(), value);
     return age >= 18;
 }
 
@@ -19,12 +24,32 @@ const clientSchemaValidator = Joi.object({
     dateOfBirth: Joi.date()
         .required()
         .custom((value, helpers) => {
-            if (!isOlderThan18(value)) {
-                return helpers.error('any.invalid', {message : "Client must be atleast 18 years old."})
+            console.log(value);
+            
+            // Check if the date is valid 
+            if (!isValid(value)) {
+                return helpers.error('any.invalid', { message: 'Invalid date format.' });
             }
+            
+            // Check if the client is older than 18
+            if (!isOlderThan18(value)) {
+                return helpers.error('any.invalid', { message: 'Client must be at least 18 years old.' });
+            }
+            
             return value;
         }),
     address: Joi.string().required()
 });
 
-export default clientSchemaValidator;
+
+const policySchemaValidator = Joi.object({
+    clientId: Joi.string().required(),
+    policyType: Joi.string().valid(...Object.values(policyTypeEnum)).required(),
+    startDate: Joi.date().required(),
+    endDate: Joi.date().greater(Joi.ref('startDate')).required(),
+    premiumAmount: Joi.number().positive().required(),
+    coverageAmount: Joi.number().positive().required(),
+    status: Joi.string().valid(...Object.values(statusEnum)).required(),
+});
+
+export { clientSchemaValidator, policySchemaValidator };
