@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { isValid, differenceInYears } from "date-fns";
 
-import { policyTypeEnum, statusEnum } from "../models/policyModel";
+import { policyTypeEnum } from "../data/data";
 
 // helper func to check if client is  >= 18
 const isOlderThan18 = (value: Date) : boolean => {
@@ -49,7 +49,13 @@ const policySchemaValidator = Joi.object({
     endDate: Joi.date().greater(Joi.ref('startDate')).required(),
     premiumAmount: Joi.number().positive().required(),
     coverageAmount: Joi.number().positive().required(),
-    status: Joi.string().valid(...Object.values(statusEnum)).required(),
 });
 
-export { clientSchemaValidator, policySchemaValidator };
+const submitClaimSchemaValidator = Joi.object({
+    policyNumber: Joi.string().required(),
+    claimAmount: Joi.number().positive().required(),
+    description : Joi.string().required()
+});
+
+
+export { clientSchemaValidator, policySchemaValidator, submitClaimSchemaValidator };

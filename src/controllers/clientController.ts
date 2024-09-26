@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-import { clientSchemaValidator } from "../utilities/validator";
+import { clientSchemaValidator } from "../utils/validator";
 import clientModel from "../models/clientModel";
 
 const createClient = async (req: Request, res: Response) : Promise<Response> => {

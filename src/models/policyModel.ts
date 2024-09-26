@@ -1,17 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export enum policyTypeEnum {
-    Life = 'life',
-    Health = 'health',
-    Auto = 'auto',
-    Home = "home"
-};
-
-export enum statusEnum { 
-    Active = "active",
-    Expired = "expired",
-    Cancelled = "cancelled"
-}
+import { policyTypeEnum, policyStatus } from "../data/data";
 
 export interface IPolicy extends Document {
     policyId: mongoose.Types.ObjectId,
@@ -22,7 +11,7 @@ export interface IPolicy extends Document {
     endDate: Date,
     premiumAmount: number,
     coverageAmount: number,
-    status : statusEnum
+    status : policyStatus
 };
 
 // Policy schema
@@ -34,7 +23,7 @@ const policySchema: Schema = new Schema({
         unique : true
     },
     clientId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         required: true,
         ref : 'client' //Reference the client model
     },
@@ -67,7 +56,8 @@ const policySchema: Schema = new Schema({
     status: {
         type: String,
         required: true,
-        enum : Object.values(statusEnum)
+        enum: Object.values(policyStatus),
+        default : policyStatus.active
     }
 }, { timestamps: true });
 

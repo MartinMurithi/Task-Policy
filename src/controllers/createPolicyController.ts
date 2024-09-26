@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
 
 import policyModel from "../models/policyModel";
-import { policySchemaValidator } from "../utilities/validator";
+import { policySchemaValidator } from "../utils/validator";
 
 
 const createPolicy = async (req: Request, res: Response): Promise<Response> => {
@@ -14,8 +14,7 @@ const createPolicy = async (req: Request, res: Response): Promise<Response> => {
         startDate,
         endDate,
         premiumAmount,
-        coverageAmount,
-        status
+        coverageAmount
     } = req.body;
     console.log(req.body);
     
@@ -32,8 +31,7 @@ const createPolicy = async (req: Request, res: Response): Promise<Response> => {
             startDate,
             endDate,
             premiumAmount,
-            coverageAmount,
-            status
+            coverageAmount
         });        
 
         const savedPolicy = await newPolicy.save();

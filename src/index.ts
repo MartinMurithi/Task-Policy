@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 import connect from "./config/db_connect";
 import "./config/db_connect";
-import clientRoute from "./routes/clientRoute";
+import route from "./routes/route";
 
 const app = express();
 const port = process.env.PORT || 9090;
@@ -23,7 +23,7 @@ app.use(
 app.use(cookieParser());
 app.use(compression());
 
-app.use("/", clientRoute);
+app.use("/", route);
 
 // Listen to open event on the mongoose connection
 mongoose.connection.once("open", () => {
