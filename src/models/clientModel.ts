@@ -1,14 +1,12 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IClient extends Document {
-    clientId: mongoose.Types.ObjectId, //unique 
+    clientId: mongoose.Types.ObjectId,
     name: string,
     email: string,
     dateOfBirth: Date,
     address : string
 };
-
-// client schema
 
 const clientSchema: Schema = new Schema({
     clientId: {

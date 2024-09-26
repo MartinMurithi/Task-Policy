@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
 
 import policyModel from "../models/policyModel";
 import { policySchemaValidator } from "../utils/validator";
+import mongoose from "mongoose";
 
 
 const createPolicy = async (req: Request, res: Response): Promise<Response> => {
@@ -22,7 +22,6 @@ const createPolicy = async (req: Request, res: Response): Promise<Response> => {
         // validate policy schema
         await policySchemaValidator.validateAsync(req.body);
 
-        // create new policy
         const newPolicy = new policyModel({
             policyId: new mongoose.Types.ObjectId(),
             clientId,

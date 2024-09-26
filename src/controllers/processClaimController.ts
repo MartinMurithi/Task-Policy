@@ -3,7 +3,6 @@ import submitClaimModel from "../models/submitClaimModel";
 import { claimStatusEnum } from "../data/data";
 
 const processClaim = async (req: Request, res: Response): Promise<Response> => {
-    // Fetch claim id from req.params
     const _id = "66f56bac2b202c549f711005";
 
     // Destructure and type currentStatus from req.body
@@ -17,7 +16,6 @@ const processClaim = async (req: Request, res: Response): Promise<Response> => {
 
         console.log(policyClaim);
         
-
         if (!policyClaim) {
             return res.status(404).json({ Message: "Policy claim does not exist" });
         }

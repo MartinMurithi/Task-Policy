@@ -7,27 +7,22 @@ import clientModel from "../models/clientModel";
 const createClient = async (req: Request, res: Response) : Promise<Response> => {
     const { name, email, dateOfBirth, address } = req.body;
 
-    // convert dob to an actual date
     const parsedDOB = new Date(dateOfBirth);
     
     try {
-
-        // check if user already exists
         const existingClient = await clientModel.findOne({ email });
         
         if (existingClient) {
             return res.status(400).json({ Message: "A user with that email already exists" });
         };
 
-        // validate client data
         await clientSchemaValidator.validateAsync({
             name,
             email,
-            dateOfBirth: parsedDOB, // Use the parsed date
+            dateOfBirth: parsedDOB,
             address
         });
         
-        // if validation passes, create a new client
         const newClient = new clientModel({
             clientId: new mongoose.Types.ObjectId(),
             name,
@@ -47,12 +42,10 @@ const createClient = async (req: Request, res: Response) : Promise<Response> => 
         
 
     } catch (error) {
-        // handle validation error
         if (error.isJoi) {
             return res.status(400).json({ error: error.message });
         }
 
-        // handle general server error
         console.error(error);
         return res.status(500).json({ message: "Internal server error." });
     }

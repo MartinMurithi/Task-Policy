@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/insurance/api/new-client", createClient);
 router.post("/insurance/api/new-policy", createPolicy);
-router.post("/insurance/api/claim-policy", submitClaim);
+router.post("/insurance/api/submit-claim-policy", submitClaim);
 router.patch("/insurance/api/process-policy-claim/:claimId", processClaim);
 
 export default router;

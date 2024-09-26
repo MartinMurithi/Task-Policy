@@ -3,7 +3,7 @@ import mongoose, { Document, Schema } from "mongoose";
 import { claimStatusEnum } from "../data/data";
 
 export interface ISubmitClaim extends Document {
-    // claimId: mongoose.Types.ObjectId,
+    claimId: mongoose.Types.ObjectId,
     policyId: mongoose.Types.ObjectId,
     clientId: mongoose.Types.ObjectId,
     policyNumber : string,
@@ -13,10 +13,10 @@ export interface ISubmitClaim extends Document {
 };
 
 const submitClaimSchema: Schema = new Schema({
-    // claimId: {
-    //     type : mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    // },
+    claimId: {
+        type : mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     policyId: {
         type: mongoose.Types.ObjectId,
         required: true,

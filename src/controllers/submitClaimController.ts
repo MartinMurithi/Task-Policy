@@ -3,15 +3,13 @@ import { Request, Response } from "express";
 import policyModel from "../models/policyModel";
 import { submitClaimSchemaValidator } from "../utils/validator";
 import submitClaimModel from "../models/submitClaimModel";
+import mongoose from "mongoose";
 
 
 const submitClaim = async (req: Request, res: Response): Promise<Response> => {
     const { policyNumber, claimAmount, description } = req.body;
     
-    // will get the policy number from req.params
     try {
-        
-        // validate the submit claim data
         await submitClaimSchemaValidator.validateAsync(req.body);
 
         // check if policy exists
@@ -28,9 +26,8 @@ const submitClaim = async (req: Request, res: Response): Promise<Response> => {
             return res.status(400).json({Message : "Claim amount exceeds the policy's coverage amount"});
         }
 
-        // create new claim
         const newClaim = new submitClaimModel({
-            // claimId: new mongoose.Types.ObjectId(),
+            claimId: new mongoose.Types.ObjectId(),
             policyId : existingPolicy.policyId,
             clientId : existingPolicy.clientId,
             policyNumber : existingPolicy.policyNumber,
