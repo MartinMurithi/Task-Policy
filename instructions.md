@@ -66,5 +66,5 @@
 ### **Final Notes**
 Here's the updated instruction:
 
-- **Testing the APIs**: All API endpoints are accessible through Postman . You can access the Postman collection using this link: [Postman Collection](https://api.postman.com/collections/24639175-10d4af9e-3015-4ac0-b80b-5fa87eef4a1a?access_key=PMAT-01J8SV20EFNPGHR3V5P25Q2RWW). Simply import the collection into Postman to explore and test the API endpoints.
+- **Testing the APIs**: All API endpoints are accessible through Postman .[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/24639175-10d4af9e-3015-4ac0-b80b-5fa87eef4a1a?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D24639175-10d4af9e-3015-4ac0-b80b-5fa87eef4a1a%26entityType%3Dcollection%26workspaceId%3D264c52e3-c381-4a65-8315-2e90789b69a5)
 
