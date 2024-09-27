@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
+
 import submitClaimModel from "../models/submitClaimModel";
+import processedClaimsModel from "../models/processedClaimsModel";
 import { claimStatusEnum } from "../data/data";
 
 const processClaim = async (req: Request, res: Response): Promise<Response> => {
-    const _id = "66f56bac2b202c549f711005";
+    const claimId = "66f68a47e5558c822f6b334c";
 
     // Destructure and type currentStatus from req.body
-    const { currentStatus }: { currentStatus: 'submitted' | 'approved' | 'rejected' } = req.body;
-    
+const { status, disbursementAmount }: { status: 'approved' | 'rejected', disbursementAmount: number } = req.body;    
     try {
-        const policyClaim = await submitClaimModel.findById(_id).populate({
-          path: "policy",
-          select: ["coverageAmount"],
+        const policyClaim = await submitClaimModel.findOne({ _id: claimId }).populate({
+            path: "policyId",
+            select : "coverageAmount"
         });
 
-        console.log(policyClaim);
-        
         if (!policyClaim) {
             return res.status(404).json({ Message: "Policy claim does not exist" });
         }
@@ -24,17 +24,17 @@ const processClaim = async (req: Request, res: Response): Promise<Response> => {
             return res.status(400).json({ Message: "Claim is not in 'submitted' status" });
         }
 
-        let disbursement: number = 0;
+         let disbursement: number = 0; // Change to let to allow reassignment
 
-        if (currentStatus === 'approved') {
+       if (status === 'approved') {
             policyClaim.status = claimStatusEnum.approved;
 
             // Get the coverage amount from the associated policy
             const coverageAmount = (policyClaim.policyId as any).coverageAmount;
 
-            // If the claim amount exceeds the coverage amount, disburse only the coverage amount
-            disbursement = Math.min(policyClaim.claimAmount, coverageAmount);
-        } else if (currentStatus === 'rejected') {
+            // If the provided disbursement amount exceeds the coverage amount, adjust it
+            disbursement = Math.min(disbursementAmount, coverageAmount);
+        } else if (status === 'rejected') {
             policyClaim.status = claimStatusEnum.rejected;
         } else {
             return res.status(400).json({ Message: "Invalid status" });
@@ -42,12 +42,22 @@ const processClaim = async (req: Request, res: Response): Promise<Response> => {
 
         await policyClaim.save();
 
-        console.log(`Updated policy: ${policyClaim}`);
+        // Save to processClaim model
+        const processedClaim = new processedClaimsModel({
+            processedClaimId : new mongoose.Types.ObjectId(),
+            submitClaimId: policyClaim._id,
+            policyId: policyClaim.policyId,
+            disbursementAmount: status === 'approved' ? disbursement : 0, // Set to 0 if rejected
+            status: policyClaim.status
+        });
+
+        await processedClaim.save();
 
         return res.status(200).json({
             Message: "Claim processed successfully",
-            claim: policyClaim,
-            disbursement: currentStatus === 'approved' ? disbursement : null
+            submittedClaim : policyClaim,
+            processedClaim: processedClaim,
+            disbursement: status === 'approved' ? disbursement : null
         });
         
     } catch (error) {

@@ -13,7 +13,7 @@ export enum policyStatusEnum {
 }
 
 export enum claimStatusEnum { 
-    submitted = "submmited",
+    submitted = "submitted",
     approved = "approved",
     rejected = "rejected",
     paid = "paid"

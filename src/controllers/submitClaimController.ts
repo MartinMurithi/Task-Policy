@@ -28,7 +28,7 @@ const submitClaim = async (req: Request, res: Response): Promise<Response> => {
 
         const newClaim = new submitClaimModel({
             claimId: new mongoose.Types.ObjectId(),
-            policyId : existingPolicy.policyId,
+            policyId : existingPolicy._id,
             clientId : existingPolicy.clientId,
             policyNumber : existingPolicy.policyNumber,
             claimAmount,
