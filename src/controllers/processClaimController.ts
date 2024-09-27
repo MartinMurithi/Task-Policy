@@ -6,7 +6,8 @@ import processedClaimsModel from "../models/processedClaimsModel";
 import { claimStatusEnum } from "../data/data";
 
 const processClaim = async (req: Request, res: Response): Promise<Response> => {
-    const claimId = "66f68a47e5558c822f6b334c";
+    //copy this id from the list of submitted claims fetched in post. Copy the _id
+    const claimId = "66f698b06c2280668cf91b97";
 
     // Destructure and type currentStatus from req.body
 const { status, disbursementAmount }: { status: 'approved' | 'rejected', disbursementAmount: number } = req.body;    

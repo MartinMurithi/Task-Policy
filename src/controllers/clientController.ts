@@ -51,24 +51,16 @@ const createClient = async (req: Request, res: Response) : Promise<Response> => 
     }
 };
 
-// const getClientByEmail = async (req: Request, res: Response): Promise<Response> => {
-//     try {
-//         const { id: _id } = req.params;
-//         console.log(_id);
 
-//         if (!mongoose.Types.ObjectId.isValid(_id)) {
-//             return res.status(500).json({Error : `${_id} is not a valid id.`})
-//         }
+const getClients = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const clients = await clientModel.find(); // Fetch all clients
+        return res.status(200).json({clients : clients});
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
 
-//         const client = await clientModel.findById(_id);
-//         console.log(client);
-        
-//         return res.status(200).json({ client: client });
-        
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({ Error: "Internal server error." });
-//     }
-// };
 
-export default createClient;
+export {createClient, getClients};
