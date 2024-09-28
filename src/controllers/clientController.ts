@@ -33,7 +33,6 @@ const createClient = async (req: Request, res: Response) : Promise<Response> => 
         
         const savedClient = await newClient.save();
         
-
         return res.status(201).json({
             status: 201,
             message: "Client created successfully.",

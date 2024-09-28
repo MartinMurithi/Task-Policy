@@ -16,7 +16,6 @@ const createPolicy = async (req: Request, res: Response): Promise<Response> => {
         premiumAmount,
         coverageAmount
     } = req.body;
-    console.log(req.body);
     
     try {
         // validate policy schema

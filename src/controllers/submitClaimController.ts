@@ -13,9 +13,7 @@ const submitClaim = async (req: Request, res: Response): Promise<Response> => {
         await submitClaimSchemaValidator.validateAsync(req.body);
 
         // check if policy exists
-        const existingPolicy = await policyModel.findOne({ policyNumber });
-        console.log(`Existing policy : ${existingPolicy}`);
-        
+        const existingPolicy = await policyModel.findOne({ policyNumber });        
 
         if (!existingPolicy) {
             return res.status(404).json({ Message: "Policy does not exist" });
@@ -37,8 +35,6 @@ const submitClaim = async (req: Request, res: Response): Promise<Response> => {
 
         const savedClaim = await newClaim.save();
 
-        console.log(`Saved claim ${savedClaim}`);
-        
         return res.status(201).json({
             Message: "Claim submitted succesfully",
             claim : savedClaim

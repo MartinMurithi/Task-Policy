@@ -25,7 +25,6 @@ const clientSchemaValidator = Joi.object({
     dateOfBirth: Joi.date()
         .required()
         .custom((value : Date, helpers : CustomHelpers) => {
-            console.log(value);
             
             // Check if the date is valid 
             if (!isValid(value)) {
