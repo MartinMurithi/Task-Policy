@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import policyModel from "../models/policyModel"
 
-const getPolicies = async (req: Request, res: Response): Promise<Response> => {
+const getPolicies = async (res: Response): Promise<Response> => {
     try {
         const policies = await policyModel.find(); // Fetch all clients
         return res.status(200).json({Policies: policies});

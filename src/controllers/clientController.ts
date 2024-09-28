@@ -54,7 +54,7 @@ const createClient = async (req: Request, res: Response) : Promise<Response> => 
 
 const getClients = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const clients = await clientModel.find(); // Fetch all clients
+        const clients = await clientModel.find(); 
         return res.status(200).json({clients : clients});
     } catch (error) {
         console.error(error);

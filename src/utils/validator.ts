@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { CustomHelpers } from "joi";
 import { isValid, differenceInYears } from "date-fns";
 
 import { policyTypeEnum } from "../data/data";
@@ -23,7 +24,7 @@ const clientSchemaValidator = Joi.object({
     }).required(),
     dateOfBirth: Joi.date()
         .required()
-        .custom((value, helpers) => {
+        .custom((value : Date, helpers : CustomHelpers) => {
             console.log(value);
             
             // Check if the date is valid 
