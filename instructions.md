@@ -16,7 +16,6 @@
    - Ensure you have MongoDB installed locally, or have access to a remote MongoDB instance.
    - In the root of the project, create a `.env` file .
    - Add the following MongoDB URI to the `.env` file:
-         MONGODB_URI=mongodb+srv://wachiramartin442:rHLFFx9susRSV9Qs@cluster0.0kysc.mongodb.net/task_policy
 
 #### 4. **Run the Project**
    - To start the project, run:
