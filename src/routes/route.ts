@@ -5,7 +5,6 @@ import submitClaim from "../controllers/submitClaimController";
 import processClaim from "../controllers/processClaimController";
 import getPolicies from "../controllers/getPolicies";
 import fetchSubmittedClaims from "../controllers/getSubmittedClaims";
-import retrieveClientClaims from "../controllers/clientClaims";
 
 const router = express.Router();
 
